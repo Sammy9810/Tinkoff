@@ -14,6 +14,9 @@ options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 options.add_argument("--start-maximized")
 options.add_argument("--window-size=1920x1080")
+options.add_argument('--ignore-certificate-errors')
+options.add_argument("--disable-3d-apis")
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 service = Service(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
@@ -56,9 +59,6 @@ try:
 except BaseException:
     print('Ошибка в блоке ввода пароля')
 
-file_name = input('Введите название файла (убедитесь, что файла с таким названием не существует): ')
-file_name += '.txt'
-
 try:
     NOT_NOW_BUTTON = ('xpath', '//button')
     wait.until(EC.visibility_of_element_located(NOT_NOW_BUTTON))
@@ -66,6 +66,9 @@ try:
     driver.find_element(*NOT_NOW_BUTTON).click()
 except BaseException:
     print('Ошибка в блоке отказа для создания кода быстрой авторизации')
+
+file_name = input('Введите название файла (убедитесь, что файла с таким названием не существует): ')
+file_name += '.txt'
 
 try:
     ALL = ('xpath', '//a[@data-schema-path="title"]')
